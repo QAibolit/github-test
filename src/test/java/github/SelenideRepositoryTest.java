@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byTagAndText;
 import static com.codeborne.selenide.Selectors.withTagAndText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -27,13 +26,13 @@ public class SelenideRepositoryTest {
         $(".header-search-button").click();
         $("#query-builder-test").shouldBe(visible).setValue("selenide").pressEnter();
         $("[data-testid='results-list']").shouldBe(visible);
-        $("a[href^='/selenide']").click();
+        $("a[href$='/selenide']").click();
 
         // Перейти в раздел Wiki проекта
         $("a#wiki-tab").shouldBe(visible).click();
 
         // Убедиться, что в списке страниц (Pages) есть страница SoftAssertions
-        $(byTagAndText("a", "Soft assertions")).shouldBe(visible).click();
+        $("a[href$='SoftAssertions']").shouldBe(visible).click();
 
         // Открыть страницу SoftAssertions, проверить что внутри есть пример кода для JUnit5
         $("[class$=header-title]").shouldHave(text("SoftAssertions"));
