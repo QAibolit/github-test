@@ -12,15 +12,29 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class SelenideRepositoryTest {
 
+    public String codeExample = """
+            @ExtendWith({SoftAssertsExtension.class})
+            class Tests {
+              @Test
+              void test() {
+                Configuration.assertionMode = SOFT;
+                open("page.html");
+            
+                $("#first").should(visible).click();
+                $("#second").should(visible).click();
+              }
+            }
+            """;
+
     @BeforeAll
-    public static void setUp(){
+    public static void setUp() {
         Configuration.baseUrl = "https://github.com";
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
     }
 
     @Test
-    public void containsJUnitCodeOnSoftAssertionsPage() {
+    public void containsJUnitCodeOnSoftAssertionsPageTest() {
         // Открыть страницу Selenide в Github
         open("");
         $(".header-search-button").click();
@@ -37,6 +51,6 @@ public class SelenideRepositoryTest {
         // Открыть страницу SoftAssertions, проверить что внутри есть пример кода для JUnit5
         $("[class$=header-title]").shouldHave(text("SoftAssertions"));
         $(withTagAndText("h4", "JUnit5")).shouldHave(text("Using JUnit5 extend test class:"));
-        $(withTagAndText("h4", "JUnit5")).parent().sibling(0).$("pre").shouldBe(visible);
+        $("[id*=junit5]").parent().sibling(0).$("pre").shouldBe(visible).shouldHave(text(codeExample));
     }
 }
