@@ -37,6 +37,7 @@ public class DragAndDropTest {
     @Test
     public void dragAndDropSquareUsingSelenideMethodTest() {
         open("/drag_and_drop");
+
         SelenideElement leftSquare = $("#column-a").shouldHave(text("A"));
         SelenideElement rightSquare = $("#column-b").shouldHave(text("B"));
 
